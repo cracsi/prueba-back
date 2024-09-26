@@ -8,7 +8,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioEntity } from './usuario/usuario.entity';
 import { HobbieEntity } from './hobbie/hobbie.etntity';
 import { UsuarioHobbieModule } from './usuario-hobbie/usuario-hobbie.module';
-import { dataSourceOptions } from '../migrations/sourceOptions';
 
 @Module({
   imports: [
