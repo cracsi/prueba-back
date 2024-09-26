@@ -8,21 +8,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioEntity } from './usuario/usuario.entity';
 import { HobbieEntity } from './hobbie/hobbie.etntity';
 import { UsuarioHobbieModule } from './usuario-hobbie/usuario-hobbie.module';
+import { dataSourceOptions } from '../migrations/sourceOptions';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'Hobbies',
-      entities: [UsuarioEntity,HobbieEntity],
-      dropSchema: false,
-      synchronize: false,
-      keepConnectionAlive: true
-    }),
+    TypeOrmModule.forRoot(dataSourceOptions),
     HobbieModule, 
     UsuarioModule, 
     UsuarioHobbieModule],

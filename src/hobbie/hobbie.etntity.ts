@@ -9,6 +9,7 @@ export class HobbieEntity {
     
     @Column()
     nombre: string;
+
     
     @Column()
     descripcion: string;
