@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { HobbieEntity } from 'src/hobbie/hobbie.etntity';
-import { UsuarioEntity } from 'src/usuario/usuario.entity';
+import { HobbieEntity } from '../hobbie/hobbie.etntity';
+import { UsuarioEntity } from '../usuario/usuario.entity';
 import { Repository } from 'typeorm';
-import { BusinessError } from 'src/shared/business-errors';
-import { BusinessLogicException } from 'src/shared/business-errors';
+import { BusinessError } from '../shared/business-errors';
+import { BusinessLogicException } from '../shared/business-errors';
 
 
 
@@ -19,7 +19,7 @@ export class UsuarioHobbieService {
         private readonly hobbieRepository: Repository<HobbieEntity>
     ) {}
 
-    async addHobbie(usuarioId: string, hobbieId: string) {
+    async addHobbie(usuarioId: string, hobbieId: string):Promise<[UsuarioEntity, HobbieEntity]> {
         const hobbie: HobbieEntity = await this.hobbieRepository.findOne({where: {id: hobbieId}, relations: ["usuarios"]});
         if (!hobbie)
           throw new BusinessLogicException("The hobbie with the given id was not found", BusinessError.NOT_FOUND);
@@ -29,12 +29,13 @@ export class UsuarioHobbieService {
           throw new BusinessLogicException("The usuario with the given id was not found", BusinessError.NOT_FOUND);
         usuario.hobbies = [...usuario.hobbies , hobbie];
         hobbie.usuarios = [...hobbie.usuarios,usuario];
-        this.hobbieRepository.save(hobbie);
-        this.usuarioRepository.save(usuario);
+        
+        
+        return  [await this.usuarioRepository.save(usuario), await this.hobbieRepository.save(hobbie)];
       }
      
      
-    async deleteHobbie(usuarioId: string, hobbieId: string){
+    async deleteHobbie(usuarioId: string, hobbieId: string):Promise<[UsuarioEntity, HobbieEntity]>{
       
         const hobbie: HobbieEntity = await this.hobbieRepository.findOne({where: {id: hobbieId}, relations: ["usuarios"]});
         if (!hobbie)
@@ -54,7 +55,6 @@ export class UsuarioHobbieService {
 
         usuario.hobbies = usuario.hobbies.filter(e => e.id !== hobbieId);
         hobbie.usuarios = hobbie.usuarios.filter(e => e.id !== usuarioId);
-        await this.hobbieRepository.save(hobbie);
-        await this.usuarioRepository.save(usuario);
+        return [await this.usuarioRepository.save(usuario),await this.hobbieRepository.save(hobbie)]
     }   
 }
