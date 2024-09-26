@@ -12,7 +12,18 @@ import { dataSourceOptions } from '../migrations/sourceOptions';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(dataSourceOptions),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'postgres',
+      database: 'Hobbies',
+      entities: [UsuarioEntity,HobbieEntity],
+      dropSchema: false,
+      synchronize: true,
+      keepConnectionAlive: true
+    }),
     HobbieModule, 
     UsuarioModule, 
     UsuarioHobbieModule],
