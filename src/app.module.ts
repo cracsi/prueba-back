@@ -20,7 +20,7 @@ import { UsuarioHobbieModule } from './usuario-hobbie/usuario-hobbie.module';
       database: 'Hobbies',
       entities: [UsuarioEntity,HobbieEntity],
       dropSchema: false,
-      synchronize: false,
+      synchronize: true,
       keepConnectionAlive: true
     }),
     HobbieModule, 
