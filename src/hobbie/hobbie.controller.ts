@@ -13,24 +13,24 @@ export class HobbieController {
     constructor(private readonly hobbieService: HobbieService) {}
 
   @Get()
-  async findAll(@Req() req){
+  async findAll(){
     return await this.hobbieService.findAll();
   }
 
   @Get(':hobbieId') 
-  async findOne(@Param('hobbieId') hobbieId: string, @Req() req){
+  async findOne(@Param('hobbieId') hobbieId: string){
     return await this.hobbieService.findOne(hobbieId);
   }
 
   @Post()
-  async create(@Body() hobbieDto: HobbieDto, @Req() req){
+  async create(@Body() hobbieDto: HobbieDto){
 
     const hobbie = plainToInstance(HobbieEntity, hobbieDto);
     return await this.hobbieService.create(hobbie);
   }
 
   @Put(':hobbieId')
-  async update(@Param('hobbieId') hobbieId: string, @Body() hobbieDto: HobbieDto, @Req() req){
+  async update(@Param('hobbieId') hobbieId: string, @Body() hobbieDto: HobbieDto){
 
     const hobbie = plainToInstance(HobbieEntity, hobbieDto);
     return await this.hobbieService.update(hobbieId, hobbie);
@@ -38,7 +38,7 @@ export class HobbieController {
 
   @Delete(':hobbieId')
   @HttpCode(204)
-  async delete(@Param('hobbieId') hobbieId: string, @Req() req){
+  async delete(@Param('hobbieId') hobbieId: string){
 
     return await this.hobbieService.delete(hobbieId);
   }

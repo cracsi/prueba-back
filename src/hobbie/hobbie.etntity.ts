@@ -15,5 +15,5 @@ export class HobbieEntity {
 
 
     @ManyToMany(() => UsuarioEntity, (usuario) => usuario.hobbies)
-    usuarios: UsuarioEntity[]
+    usuarios: UsuarioEntity[];
 }

@@ -11,8 +11,4 @@ export class HobbieDto {
  readonly descripcion: string;
 
 
- @IsString()
- @IsNotEmpty()
- readonly rating: number;
-
 }
